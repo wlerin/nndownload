@@ -503,8 +503,8 @@ def collect_parameters(template_params, params):
     if params.get("video"):
         template_params["id"] = params["video"]["id"]
         template_params["title"] = params["video"]["title"]
-        template_params["uploader"] = params["owner"]["nickname"].strip(" さん")
-        template_params["uploader_id"] = int(params["owner"]["id"])
+        template_params["uploader"] = params.get("owner", {}).get("nickname", "").rstrip(" さん")
+        template_params["uploader_id"] = int(params.get("owner", {}).get("id", 0))
         template_params["ext"] = params["video"]["movieType"]
         template_params["description"] = params["video"]["description"]
         template_params["thumbnail_url"] = params["video"]["thumbnailURL"]
@@ -518,7 +518,7 @@ def collect_parameters(template_params, params):
     if params.get("videoDetail"):
         template_params["id"] = params["videoDetail"]["id"]
         template_params["title"] = params["videoDetail"]["title"]
-        template_params["uploader"] = params["uploaderInfo"]["nickname"].strip(" さん")
+        template_params["uploader"] = params["uploaderInfo"]["nickname"].rstrip(" さん")
         template_params["uploader_id"] = int(params["uploaderInfo"]["id"])
         template_params["ext"] = params["flashvars"]["movie_type"]
         template_params["description"] = params["videoDetail"]["description"]
